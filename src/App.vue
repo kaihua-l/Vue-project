@@ -1,7 +1,9 @@
 <template>
 	<div class="app-container">
 		<!-- 顶部header区域 -->
-		<mt-header fixed title="前端Vue项目"></mt-header>
+		<mt-header fixed title="前端Vue项目">
+			<span class="mui-icon mui-icon-arrowleft go" slot="left" @click="go"><span> 返回</span></span>
+		</mt-header>
 		<!-- 中间路由 router-view 区域 -->
 		<transition>
 			<router-view></router-view>
@@ -17,7 +19,7 @@
 				<span class="mui-tab-label">会员</span>
 			</router-link>
 			<router-link class="mui-tab-item-l" to="/showcar">
-				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">0</span></span>
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="badge">0</span></span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="mui-tab-item-l"to="/search">
@@ -28,12 +30,29 @@
 	</div>
 </template>
 <script>
+	export default {
+		data(){
+			return{
 
+			}
+		},
+		methods:{
+			go(){
+				this.$router.go(-1)
+			}
+		}
+	}
 </script>
 	
 <style lang="less" scoped>
 	.mint-header {
 		z-index: 999;
+		.mui-icon{
+			font-size: 24px;
+			span {
+				font-size: 18px;
+			}
+		}
 	}
 	.app-container{
 		padding-top: 40px;

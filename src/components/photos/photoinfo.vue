@@ -41,19 +41,19 @@
 			this.getImageInfo()
 
 			this.$http.get('api/getthumimages/'+this.id).then(res=>{
-					if(res.body.status == 0){
-						res.body.message.forEach((item,i)=>{
-							this.slide1.push({
-								src: item.src,
-					            msrc: item.src,
-					            alt: 'picture'+i,
-					            title: 'Image Caption '+i,
-					            w: 600,
-					            h: 600
-							})
+				if(res.body.status == 0){
+					res.body.message.forEach((item,i)=>{
+						this.slide1.push({
+							src: item.src,
+				            msrc: item.src,
+				            alt: 'picture'+i,
+				            title: 'Image Caption '+i,
+				            w: 600,
+				            h: 600
 						})
-					}
-				})
+					})
+				}
+			})
 		}
 	}
 </script>
