@@ -20,7 +20,7 @@
 						市场价：<del>￥{{getinfo.market_price}}</del>&nbsp;&nbsp;销售价：<span class="now_price">￥{{getinfo.sell_price}}</span>
 					</p>
 					<p>
-						购买数量：  <numbox @fun="getNumber" :maxNum = "getinfo.stock_quantity"></numbox>
+						购买数量：  <numbox @fun="getNumber" :spid="id" :maxNum = "getinfo.stock_quantity"></numbox>
 					</p>
 					<p>
 						<mt-button type="primary" size="small">立即购买</mt-button>
@@ -57,7 +57,6 @@
 				getinfo:{},
 				ballFlag:false,
 				boxNumber:1	
-
 			}
 		},
 		methods:{
@@ -84,7 +83,14 @@
 			},
 			addToShopCar(){
 				this.ballFlag = !this.ballFlag
+				var obj = {
+						id:this.id,
+						count:this.boxNumber,
+						price:this.getinfo.sell_price,
+						selected:true
+					}
 
+				this.$store.commit('pushCar',obj);
 			},
 			beforeEnter(el){
 				el.style.transform = "translate(0,0)";

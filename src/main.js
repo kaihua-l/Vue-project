@@ -57,6 +57,80 @@ Vue.component('swiper',swiper);
 import VuePreview from 'vue-preview'
 Vue.use(VuePreview)
 
+var car = JSON.parse(localStorage.getItem('car') || '[]')
+
+import Vuex from 'vuex';
+Vue.use(Vuex);
+var store = new Vuex.Store({
+	state:{
+		car:car
+	},
+	mutations:{
+		pushCar(state,obj){
+			var flag = false;
+			if(state.car != null){
+				state.car.some(item =>{
+					if(item.id == obj.id){
+						item.count = item.count+parseInt(obj.count);
+						flag = true
+						return true;
+					}
+				})
+			}
+			if(!flag){
+				state.car.push(obj)
+			}
+			localStorage.setItem('car',JSON.stringify(state.car))
+		},
+		update(state,obj){
+
+			state.car.some(item =>{
+				if(item.id == obj.id){
+					item.count = parseInt(obj.num)
+				}
+			})
+			localStorage.setItem('car',JSON.stringify(state.car))
+		},
+		remDate(state,id){
+			state.car.some((item,i)=>{
+				if(item.id==id){
+					state.car.splice(i,1);
+					return true
+				}
+			})
+			localStorage.setItem('car',JSON.stringify(state.car))
+		}
+	},
+	getters:{
+		sum(state){
+			var sum = 0;
+			if(state.car != null){
+				state.car.forEach(item =>{
+					sum += item.count;
+				})
+			}
+			return sum
+		},
+		carList(state){
+			var list = '';
+			if(state.car != null){
+				state.car.forEach(item =>{
+					list += item.id+',';
+				})
+			}
+			return list
+		},
+		getGoosCount(state){
+			var o ={};
+			if(state.car != null){
+				state.car.forEach(item =>{
+					o[item.id] = item.count;
+				})
+			}
+			return o;
+		}
+	}
+})
 //创建实例对象
 var vm = new Vue({
 	el:'#app',
@@ -64,5 +138,6 @@ var vm = new Vue({
 
 	},
 	render:c=>c(app),
-	router
+	router,
+	store
 })

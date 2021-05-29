@@ -14,9 +14,16 @@
 			}
 		},
 		mounted(){
-			mui('.mui-numbox').numbox()
+			mui('.mui-numbox').numbox();
+			// console.log(this.spid)
+			// this.$store.state.car.some(item =>{
+			// 	if(item.id == this.spid){
+			// 		mui('.mui-numbox').numbox().setValue(item.count)
+			// 		console.log(item.count)
+			// 	}
+			// })
 		},
-		props:["maxNum"],
+		props:["maxNum","spid"],
 		watch:{
 			'maxNum':function(newVal,oleVal){
 				mui('.mui-numbox').numbox().setOption('max',newVal)
