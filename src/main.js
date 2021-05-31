@@ -2,6 +2,7 @@
 //导入vue
 import Vue from 'vue';
 //导入路由
+//
 import VueRouter from 'vue-router';
 //导入App根组件
 import app from './App.vue';
@@ -35,6 +36,7 @@ Vue.component('comment',comment);
 
 //安装router组件
 Vue.use(VueRouter);
+
 import router from './router.js';
 
 //导入 vue-resource  用于发送请求
@@ -93,12 +95,22 @@ var store = new Vuex.Store({
 		},
 		remDate(state,id){
 			state.car.some((item,i)=>{
-				if(item.id==id){
+				if(item.id == id){
 					state.car.splice(i,1);
 					return true
 				}
 			})
 			localStorage.setItem('car',JSON.stringify(state.car))
+		},
+		updateSelected(state,obj){
+			state.car.some(item=>{
+				if(item.id == obj.id){
+					item.selected = obj.selected
+					return true
+				}
+			})
+			localStorage.setItem('car',JSON.stringify(state.car))
+
 		}
 	},
 	getters:{
@@ -128,7 +140,30 @@ var store = new Vuex.Store({
 				})
 			}
 			return o;
+		},
+		getGoosSelected(state){
+			var o ={};
+			if(state.car != null){
+				state.car.forEach(item =>{
+					o[item.id] = item.selected;
+				})
+			}
+			return o;
+		},
+		getGoodsCountAanAmount(state){
+			var o = {
+				count:0,
+				amount:0
+			}
+			state.car.forEach(item=>{
+				if(item.selected == true){
+					o.count += item.count
+					o.amount += item.count * item.price
+				}
+			})
+			return o
 		}
+
 	}
 })
 //创建实例对象

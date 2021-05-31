@@ -2,7 +2,7 @@
 	<div class="app-container">
 		<!-- 顶部header区域 -->
 		<mt-header fixed title="前端Vue项目">
-			<span class="mui-icon mui-icon-arrowleft go" slot="left" @click="go"><span> 返回</span></span>
+			<span v-show="flag" class="mui-icon mui-icon-arrowleft go" slot="left" @click="go"><span> 返回</span></span>
 		</mt-header>
 		<!-- 中间路由 router-view 区域 -->
 		<transition>
@@ -33,14 +33,26 @@
 	export default {
 		data(){
 			return{
-
+				flag:true
 			}
 		},
 		methods:{
 			go(){
-				this.$router.go(-1)
+				this.$router.go(-1);
 			}
 		},
+		watch:{
+			'$route.path':function(val){
+				if (val == '/home'){
+					this.flag = false
+				}else{
+					this.flag = true
+				}
+			}
+		},
+		created(){
+			this.flag = this.$route.path==="/home"?false:true
+		}
 	}
 </script>
 	
